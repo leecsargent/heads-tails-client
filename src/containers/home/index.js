@@ -5,7 +5,10 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { contain } from '../../style/utils'
 import { fetchRandom } from '../../modules/actions/random'
-import { getRestult } from '../../modules/reducers/random'
+import {
+  getIsFetching,
+  getRestult,
+} from '../../modules/reducers/random'
 
 const Wrapper = styled.div`
   ${ contain('400px', '0', 'auto', '30px') }
@@ -65,8 +68,23 @@ class Home extends React.Component {
     this.props.fetchRandom(list);
   }
 
-  render() {
+  renderLoader() {
+    return (
+      <p>Hang tight...</p>
+    )
+  }
+
+  renderResult() {
     const { result } = this.props;
+
+    return (
+      <p>{ result.result }</p>
+    )
+  }
+
+  render() {
+    const { result, isFetching } = this.props;
+    console.log('isFetching', isFetching);
 
     return (
       <Wrapper>
@@ -82,13 +100,20 @@ class Home extends React.Component {
           </div>
           <input type="submit" value="Submit" className="submit" />
         </form>
-        <div>{ result && result.result }</div>
+
+
+
+        <div>
+          { isFetching && this.renderLoader() }
+          { result && this.renderResult() }
+        </div>
       </Wrapper>
     )
   }
 }
 const mapStateToProps = (state) => ({
   result: getRestult(state),
+  isFetching: getIsFetching(state),
 })
 
 const mapDispatchToProps = dispatch =>

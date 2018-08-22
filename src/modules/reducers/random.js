@@ -5,16 +5,19 @@ export default (state = initialState, action) => {
     case 'FETCH_REQUEST':
       return {
         ...state,
+        isFetching: true,
       }
     case 'FETCH_SUCCESS':
       return {
         ...state,
-        result: action.payload
+        result: action.payload,
+        isFetching: false,
       }
     case 'FETCH_ERROR':
       return {
         ...state,
         error: action.error,
+        isFetching: false,
       }
     default:
       return state
@@ -22,4 +25,5 @@ export default (state = initialState, action) => {
 }
 
 
-export const getRestult = state => state.random.result
+export const getRestult = state => state.random.result;
+export const getIsFetching = state => state.random.isFetching;

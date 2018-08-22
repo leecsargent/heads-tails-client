@@ -14,12 +14,12 @@ export const fetchRandom = (phoneNumbers) =>  {
       body: JSON.stringify(data),
     })
     .then(response => response.json())
-    .then(data => dispatch(fetchSucess(data)))
+    .then(data => dispatch(fetchSuccess(data)))
     .catch(error => dispatch(fetchError(error)));
   }
 }
 
-export const fetchSucess = (data) => {
+export const fetchSuccess = (data) => {
   return {
     type: 'FETCH_SUCCESS',
     payload: data,
